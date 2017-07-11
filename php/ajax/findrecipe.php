@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/../class/FindRecipe.php');
 $returnMessage = array('error'=>false,'message'=>'');
 if (isset($_FILES["fridge_csv"])) {
     if ($_FILES["file"]["error"] > 0) {
@@ -7,8 +8,7 @@ if (isset($_FILES["fridge_csv"])) {
         die (json_encode($returnMessage));
     }
     else {
-        $tmpName = $_FILES["fridge_csv"]["tmp_name"];
-        $fridgeList = array_map('str_getcsv', file($tmpName));
+        $fridgeTempName = $_FILES["fridge_csv"]["tmp_name"];
     }
 } else {
     $returnMessage['error'] = true;
@@ -22,8 +22,7 @@ if (isset($_FILES["recipe_json"])) {
         die (json_encode($returnMessage));
     }
     else {
-        $tmpNameRecipe = $_FILES["recipe_json"]["tmp_name"];
-        $recipeList = json_decode(file_get_contents($tmpNameRecipe), true);
+        $recipeTempName = $_FILES["recipe_json"]["tmp_name"];
     }
 } else {
     $returnMessage['error'] = true;
@@ -32,9 +31,10 @@ if (isset($_FILES["recipe_json"])) {
 }
 
 // TEST if data is parsed correctly
-$returnMessage['error'] = true;
+$returnMessage['error'] = false;
 $returnMessage['message'] = 'Testing is data is parsed correctly';
-$returnMessage['fridge'] = $fridgeList;
-$returnMessage['recipe'] = $recipeList;
+$findRecipe = new FindRecipe($recipeTempName, $fridgeTempName);
+$returnMessage['recipes'] = $findRecipe->findRecipe();
 die (json_encode($returnMessage));
+
 ?>
