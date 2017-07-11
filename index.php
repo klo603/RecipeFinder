@@ -4,6 +4,14 @@
     <script src="assets/plugins/jquery-3.2.1.min.js"></script>
     <script src="assets/plugins/bootstrap.min.js"></script>
     <script src="assets/recipefinder.js"></script>
+    <style>
+        ol li{
+            font-size:20px;
+        }
+        ul li{
+            font-size:16px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -26,6 +34,17 @@
         </div>
     </div>
     <button class="btn btn-md btn-info" id="find_recipe_btn">What to cook tonight?</button>
+    <div id="error_wrapper" style="display:none;"></div>
+    <div id="results_wrapper" class="row" style="display:none;">
+        <div class="col-md-12">
+            <h2>You can cook:</h2>
+        </div>
+        <div class="col-md-12">
+            <ol id="results">
+
+            </ol>
+        </div>
+    </div>
 </div>
 </body>
 </html>
