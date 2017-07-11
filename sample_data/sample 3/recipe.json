@@ -11,5 +11,17 @@
         "ingredients": [
             { "item":"bread", "amount":"2", "unit":"slices"},
             { "item":"mixed salad", "amount":"100", "unit":"grams"} ]
+    },
+    {
+        "name": "peanut butter sandwich",
+        "ingredients": [
+            { "item":"bread", "amount":"2", "unit":"slices"},
+            { "item":"peanut butter", "amount":"100", "unit":"grams"} ]
+    },
+    {
+        "name": "buttered toast",
+        "ingredients": [
+            { "item":"bread", "amount":"2", "unit":"slices"},
+            { "item":"butter", "amount":"100", "unit":"grams"} ]
     }
 ]

@@ -37,7 +37,7 @@
     <div id="error_wrapper" style="display:none;"></div>
     <div id="results_wrapper" class="row" style="display:none;">
         <div class="col-md-12">
-            <h2>You can cook:</h2>
+            <h2 id="results_heading">You can cook:</h2>
         </div>
         <div class="col-md-12">
             <ol id="results">

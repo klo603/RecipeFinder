@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/../class/FindRecipe.php');
 $returnMessage = array('error'=>false,'message'=>'');
 if (isset($_FILES["fridge_csv"])) {
-    if ($_FILES["file"]["error"] > 0) {
+    if ($_FILES["fridge_csv"]["error"] > 0) {
         $returnMessage['error'] = true;
         $returnMessage['message'] = 'There was an error uploading the Fridge List CSV file';
         die (json_encode($returnMessage));
@@ -16,7 +16,7 @@ if (isset($_FILES["fridge_csv"])) {
     die (json_encode($returnMessage));
 }
 if (isset($_FILES["recipe_json"])) {
-    if ($_FILES["file"]["error"] > 0) {
+    if ($_FILES["recipe_json"]["error"] > 0) {
         $returnMessage['error'] = true;
         $returnMessage['message'] = 'There was an error uploading the Recipe JSON file';
         die (json_encode($returnMessage));

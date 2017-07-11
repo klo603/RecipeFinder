@@ -3,13 +3,26 @@
         "name": "grilled cheese on toast",
         "ingredients": [
             { "item":"bread", "amount":"2", "unit":"slices"},
-            { "item":"cheese", "amount":"2", "unit":"slices"} 
+            { "item":"cheese", "amount":"2", "unit":"slices"}
         ]
     },
     {
-        "name": "salad sandwich",
+        "name": "extra salad sandwich",
         "ingredients": [
             { "item":"bread", "amount":"2", "unit":"slices"},
-            { "item":"mixed salad", "amount":"100", "unit":"grams"} ]
+            { "item":"mixed salad", "amount":"200", "unit":"grams"} ]
+    },
+    {
+        "name": "peanut butter sandwich",
+        "ingredients": [
+            { "item":"bread", "amount":"2", "unit":"slices"},
+            { "item":"peanut butter", "amount":"100", "unit":"grams"} ]
+    },
+    {
+        "name": "ham and cheese sandwich",
+        "ingredients": [
+            { "item":"bread", "amount":"2", "unit":"slices"},
+            { "item":"cheese", "amount":"2", "unit":"slices"},
+            { "item":"ham", "amount":"2", "unit":"slices"}]
     }
 ]

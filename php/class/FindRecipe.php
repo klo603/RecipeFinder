@@ -9,7 +9,7 @@ class FindRecipe{
         $fridgeList = array_map('str_getcsv', file($fridgeFile));
         $this->fridgeList = $this->parseFridgeCSV($fridgeList);
         $this->recipeList = json_decode(file_get_contents($recipeFile), true);
-        $this->debug = false;
+        $this->debug = true;
     }
     public function findRecipe(){
         if(empty($this->recipeList)){
@@ -39,31 +39,39 @@ class FindRecipe{
                 error_log($recipe['name'] . ' no ingredients found');
             }
         }
-        $ingredientOut = false;
+        $itemInvalid = false;
         $closestUseBy = false;
-
+        $itemsCount = count($recipe['ingredients']);
+        $itemsFound = 0;
         foreach($recipe['ingredients'] as $ingredient){
             if (!empty($ingredient['item']) && !empty($ingredient['amount']) && !empty($ingredient['unit'])){
-                foreach($this->fridgeList as $fridgeItem){
-                    if ($fridgeItem['item'] === $ingredient['item'] && $fridgeItem['unit'] === $ingredient['unit']){
-                        if ($fridgeItem['amount'] < $ingredient['amount']){
-                            $ingredientOut = true;
+                foreach($this->fridgeList as $fridgeItem) {
+                    if ($fridgeItem['item'] === $ingredient['item'] && $fridgeItem['unit'] === $ingredient['unit']) {
+                        if ($fridgeItem['amount'] < $ingredient['amount']) {
+                            $itemInvalid = true;
                             if ($this->debug) {
                                 error_log($recipe['name'] . '/' . $ingredient['item'] . ' not enough amount');
                             }
                         }
-                        if (strtotime($fridgeItem['useBy']) < time()){
-                            $ingredientOut = true;
+                        if (strtotime($fridgeItem['useBy']) < time()) {
+                            $itemInvalid = true;
                             if ($this->debug) {
-                                error_log($recipe['name'] . '/' . $ingredient['item'] . ' useBy: '.$fridgeItem['useBy']);
-                                error_log('Current Time: '.time());
+                                error_log($recipe['name'] . '/' . $ingredient['item'] . ' useBy: ' . $fridgeItem['useBy']);
+                                error_log('Current Time: ' . time());
                                 error_log($recipe['name'] . '/' . $ingredient['item'] . ' expired');
                             }
                         }
-                        if ($ingredientOut === false) {
-                            if ($closestUseBy === false){
+                        if ($itemInvalid === false) {
+                            $itemsFound++;
+                            if ($closestUseBy === false) {
                                 $closestUseBy = strtotime($fridgeItem['useBy']);
-                            } elseif ($closestUseBy > strtotime($fridgeItem['useBy'])){
+                                if ($this->debug) {
+                                    error_log($recipe['name'] . '/' . $ingredient['item'] . ' useBy: ' . $fridgeItem['useBy']);
+                                }
+                            } elseif ($closestUseBy > strtotime($fridgeItem['useBy'])) {
+                                if ($this->debug) {
+                                    error_log($recipe['name'] . '/' . $ingredient['item'] . ' new useBy: ' . $fridgeItem['useBy']);
+                                }
                                 $closestUseBy = strtotime($fridgeItem['useBy']);
                             }
                         }
@@ -75,7 +83,7 @@ class FindRecipe{
                 }
             }
         }
-        if ($ingredientOut === false){
+        if ($itemsFound === $itemsCount){
             $recipe['useBy'] = $closestUseBy;
             return $recipe;
         } else {
